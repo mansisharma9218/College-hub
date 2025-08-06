@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Papers</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0066cc, #003366);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            min-height: 100vh;
+            height: auto;
+            color: black;
+            font-family: sans-serif;
+        }
+
+        .upload-container {
+            background: white;
+            padding: 25px;
+            width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #004085;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+            width: 95%;
+        }
+        
+        .input-group label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #004085;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background: #004085;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #002855;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+
+        .preview-container {
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="upload-container">
+        <h2>Upload Past Year Papers</h2>
+        <form id="uploadForm">
+            <div class="input-group">
+                <label for="courseCode">Course Code</label>
+                <input type="text" id="courseCode" placeholder="e.g., CS101">
+                <small class="error" id="courseError"></small>
+            </div>
+
+            <div class="input-group">
+                <label for="year">Year</label>
+                <input type="text" id="year" placeholder="e.g., 2024">
+                <small class="error" id="yearError"></small>
+            </div>
+
+            <div class="input-group">
+                <label for="paperName">Paper Title</label>
+                <input type="text" id="paperName" placeholder="Enter paper title">
+                <small class="error" id="nameError"></small>
+            </div>
+
+            <div class="input-group">
+                <label for="fileInput">Upload Paper (PDF or Image)</label>
+                <input type="file" id="fileInput" accept=".pdf, .jpg, .jpeg, .png">
+                <small class="error" id="fileError"></small>
+            </div>
+            
+            <button type="submit">Upload Paper</button>
+        </form>
+
+        <div class="preview-container" id="previewContainer">
+            <h3>File Preview</h3>
+            <img id="previewImage" src="" alt="Preview">
+            <p id="previewText"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let courseCode = document.getElementById("courseCode").value.trim();
+            let year = document.getElementById("year").value.trim();
+            let paperName = document.getElementById("paperName").value.trim();
+            let fileInput = document.getElementById("fileInput").files[0];
+
+            let courseError = document.getElementById("courseError");
+            let yearError = document.getElementById("yearError");
+            let nameError = document.getElementById("nameError");
+            let fileError = document.getElementById("fileError");
+
+            let previewContainer = document.getElementById("previewContainer");
+            let previewImage = document.getElementById("previewImage");
+            let previewText = document.getElementById("previewText");
+
+            courseError.style.display = "none";
+            yearError.style.display = "none";
+            nameError.style.display = "none";
+            fileError.style.display = "none";
+            previewContainer.style.display = "none";
+
+            let isValid = true;
+
+            if (courseCode === "") {
+                courseError.textContent = "Course code is required";
+                courseError.style.display = "block";
+                isValid = false;
+            }
+
+            if (year === "" || !/^\d{4}$/.test(year)) {
+                yearError.textContent = "Please enter a valid year (e.g., 2024)";
+                yearError.style.display = "block";
+                isValid = false;
+            }
+
+            if (paperName === "") {
+                nameError.textContent = "Paper title is required";
+                nameError.style.display = "block";
+                isValid = false;
+            }
+
+            if (!fileInput) {
+                fileError.textContent = "Please select a file";
+                fileError.style.display = "block";
+                isValid = false;
+            }
+
+            if (isValid) {
+                if (["jpg", "jpeg", "png"].includes(fileInput.name.split('.').pop().toLowerCase())) {
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.style.display = "block";
+                        previewText.textContent = "";
+                    };
+                    reader.readAsDataURL(fileInput);
+                } else {
+                    previewContainer.style.display = "block";
+                    previewImage.src = "";
+                    previewText.textContent = "PDF uploaded successfully!";
+                }
+
+                alert("Paper uploaded successfully!");
+            }
+        });
+    </script>
+
+</body>
+</html>

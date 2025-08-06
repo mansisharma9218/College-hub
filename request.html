@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Paper</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0066cc, #003366);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: black;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        .request-container {
+            background: white;
+            padding: 30px;
+            width: 450px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #004085;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+            width: 95%;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #004085;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background: #004085;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #002855;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="request-container">
+        <h2>Request a Past Year Paper</h2>
+        <br>
+        <form id="requestForm">
+            <div class="input-group">
+                <label for="courseCode">Course Code</label>
+                <input type="text" id="courseCode" placeholder="e.g., CS101">
+                <small class="error" id="courseError"></small>
+            </div>
+
+            <div class="input-group">
+                <label for="subjectTitle">Subject Title</label>
+                <input type="text" id="subjectTitle" placeholder="e.g., Computer Science Fundamentals">
+            </div>
+
+            <div class="input-group">
+                <label for="year">Year</label>
+                <input type="text" id="year" placeholder="e.g., 2024">
+                <small class="error" id="yearError"></small>
+            </div>
+
+            <div class="input-group">
+                <label for="additionalInfo">Additional Info</label>
+                <textarea id="additionalInfo" rows="3" placeholder="Enter any details"></textarea>
+            </div>
+            
+            <button type="submit">Request Paper</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("requestForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let courseCode = document.getElementById("courseCode").value.trim();
+            let year = document.getElementById("year").value.trim();
+            let courseError = document.getElementById("courseError");
+            let yearError = document.getElementById("yearError");
+
+            courseError.style.display = "none";
+            yearError.style.display = "none";
+
+            let isValid = true;
+
+            if (courseCode === "") {
+                courseError.textContent = "Course code is required";
+                courseError.style.display = "block";
+                isValid = false;
+            }
+
+            if (year === "" || !/^\d{4}$/.test(year)) {
+                yearError.textContent = "Please enter a valid year (e.g., 2024)";
+                yearError.style.display = "block";
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Your request has been submitted!");
+            }
+        });
+    </script>
+
+</body>
+</html>

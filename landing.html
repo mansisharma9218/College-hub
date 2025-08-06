@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Hub</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7fc;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .navbar {
+        background: #002855;
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 10px; 
+      }
+
+      .nav-buttons a {
+        background: #004085;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+        display: inline-block;
+      }
+
+      .nav-buttons a:hover {
+        background: #002855;
+      }
+
+      .hero {
+        background: #004085;
+        color: white;
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .hero h1,
+      .hero p {
+        max-width: 600px;
+        margin: 10px auto;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      .search-container {
+        text-align: center;
+        margin: 40px auto;
+        max-width: 900px;
+        display: flex;
+        justify-content: center;
+        border-radius: 30px;
+        overflow: hidden;
+      }
+
+      .search-container input {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #004085;
+        font-size: 16px;
+        outline: none;
+        border-radius: 30px 0 0 30px;
+      }
+
+      .search-container button {
+        width: 300px;
+        padding: 14px;
+        background: #004085;
+        color: white;
+        border: 2px solid #004085;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 0 30px 30px 0;
+      }
+
+      .search-container button:hover {
+        background: #002855;
+      }
+
+      .papers-section {
+        text-align: center;
+        margin: 40px;
+      }
+      .papers-section h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .papers-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .paper-card {
+        background: white;
+        padding: 20px;
+        width: 280px;
+        flex-basis: 280px;
+        min-height: 250px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .paper-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .paper-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      }
+      .paper-card a {
+        text-decoration: none;
+        color: #004085;
+        font-weight: bold;
+        font-size: 18px;
+        display: block;
+        margin-top: 10px;
+      }
+      .footer {
+        background: #002855;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-links">
+        <a href="landing.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="upload.html">Upload Papers</a>
+        <a href="request.html">Request Papers</a>
+      </div>
+      <div class="nav-buttons">
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+    <div class="hero">
+      <h1>Welcome to College Hub</h1>
+      <br />
+      <p>
+        Prepare to excel in your CATs and FATs with College Hub's dedicated
+        repository of past exam papers. Access key resources to review concepts,
+        tackle challenging questions, and familiarize yourself with exam
+        patterns. Boost your confidence, sharpen your strategy, and get ready to
+        ace your exams!
+      </p>
+    </div>
+    <p
+      id="message"
+      style="text-align: center; font-size: 18px; color: #004085"
+    ></p>
+    <div class="search-container">
+      <input type="text" placeholder="Search by subject..." id="searchText" />
+      <button onclick="handleSubmit()">Search</button>
+    </div>
+    <div class="papers-section">
+      <h2 style="color: #002855">Past Year Papers</h2>
+      <div class="papers-container">
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2025 College Hub. All rights reserved.</p>
+    </div>
+  </body>
+  <script>
+    let theJson = [
+      {
+        subname: "Data Structures and Algorithms 2021",
+        imgUrl: "./dsa.png",
+      },
+      {
+        subname: "Physics 2022",
+        imgUrl: "./phy.png",
+      },
+      {
+        subname: "Mathematics 2023",
+        imgUrl: "./math.png",
+      },
+    ];
+
+    let paperContainer = document.querySelector(".papers-container");
+    let theString = "";
+    function init() {
+      theString = "";
+      theJson.map((el, ind) => {
+      theString =theString +
+      `<a href="${el.imgUrl}" target="_blank" class="paper-card">
+        <img src="${el.imgUrl}" alt="${el.subname}" class="paper-image" />
+        <div>${el.subname}</div>
+      </a>`;
+    });
+    paperContainer.innerHTML = theString;
+    }
+    init();
+    function handleSubmit() {
+      theString = "";
+      let inputData = document.getElementById("searchText").value;
+
+      if (inputData == "") {
+      init();
+      return;
+    }
+
+    theJson.map((el, ind) => {
+      if (el.subname.toLowerCase().includes(inputData.toLowerCase())) {
+        theString = theString + `<a href="${el.imgUrl}" target="_blank" class="paper-card">
+          <img src="${el.imgUrl}" alt="${el.subname}" class="paper-image" />
+          <div>${el.subname}</div>
+        </a>`;
+      }
+    });
+    paperContainer.innerHTML = theString;
+  }
+  </script>
+</html>
